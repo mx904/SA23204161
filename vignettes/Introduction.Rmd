@@ -1,0 +1,189 @@
+---
+title: "Introduction for R package SA23204161"
+author: "Bosen Hu"
+date: "2023-12-10"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Introduction for R package SA23204161}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+packages:
+  - MASS
+  - Rcpp
+---
+
+## Function G.nn.garrotte()
+
+### Description
+
+Solve the group linear regression using group non-negative garrotte method, given the linear regression data and the group information.
+
+### Usage
+
+G.nn.garrotte(x, y, g.index, p,normalized = TRUE, gram = TRUE)
+
+### Arguments
+
+|parameter|description|
+|-----|-----|
+|x|The design matrix, expressed as a matrix, has *n* rows and *m* columns.|
+|y|The response vector, expressed as a matrix, has *n* rows and *1* column.|
+|g.index|The group information, expressed as a vector, has *m* dimensions, start from 1, the same group has the same elements.|
+|p|The group information, expressed as a vector, has *unique(g.index)* dimensions, the *i*-th element records the number of variables in the *i*-th group.|
+|normalized|A logical variable, default is *TRUE*, scale every column of the design matrix.|
+|gram|A logical variable, default is *TRUE*, apply gram-Schmidt orthogonal normalization for column vectors of the same group.|
+
+### Value
+
+A list containing the origin data *x*, *y*, *g.index*, *p*, and the shrinking matrix *d*, estimated parameters *betas*, solution path *path*.
+
+### Example
+
+```{r eval = FALSE}
+library(MASS)
+x<-mvrnorm(200,mu = rep(0,8),Sigma = diag(rep(1,8)))
+eps<-rnorm(200,0,1)
+beta<-matrix(c(.1,.2,.3,.3,.5,.9,.4,.4))
+y<-x%*%beta+eps
+g.index<-c(1,1,2,2,2,2,3,3)
+p<-c(2,4,2)
+fit<-G.nn.garrotte(x,y,g.index,p)
+fit
+```
+
+
+## Function SNSMS()
+
+### Description
+
+Calculate the change-point that may occur in the time series data using the self-normalized sequential change-point detection method, which avoids calculating the long-run covariance matrix.
+
+### Usage
+
+SNSMS(L,x,theta,m,alpha,Tm,d)
+
+### Arguments
+
+|parameter|description|
+|-----|-----|
+|L|The object function, the dimension is same as *x*.|
+|x|The time series data, can be a vector or a *d*-row matrix. Suppose the first *m* data are observed with no change points.|
+|theta|Estimated parameter satisfying the sum of the first *m* object functions equal zero.|
+|m|The number of observed data.|
+|alpha|The significance level, taking value at 0.05 and 0.1.|
+|Tm|the ratio of the monitoring horizon to the size of the training sample, taking value at 1, 2, 10 and >100.|
+|d|The dimension of data, taking value at 1, 2 and 3.|
+
+### Value
+
+A numeric *k* representing the change point occurring at the time *m+k*.
+
+### Example
+
+```{r eval = FALSE}
+L<-function(x,mu){(x-mu)^2}
+x<-c(rnorm(200,0,1),rnorm(1800,2,1))
+m<-180
+theta<-mean(x[1:m])
+alpha<-0.05
+Tm<-10
+d<-1
+k<-SNSMS(L,x,theta,m,alpha,Tm,d)
+plot(x,type="l")
+abline(v=m+k,col="red")
+```
+
+```{r eval = FALSE}
+library(MASS)
+L<-function(x,mu){(x-mu)^2}
+x<-cbind(t(mvrnorm(200,c(0,0),diag(c(1,1)))),t(mvrnorm(1800,c(1,2),diag(c(1,1)))))
+m<-180
+theta<-rowMeans(x[,1:m])
+alpha<-0.05
+Tm<-10
+d<-2
+SNSMS(L,x,theta,m,alpha,Tm,d)
+```
+
+
+
+## Function SNSMS_Cpp()
+
+### Description
+
+Calculate the change-point that may occur in the time series data using the self-normalized sequential change-point detection method, the Cpp version.
+
+### Usage
+
+SNSMS_Cpp(Function L,NumericMatrix x,NumericVector theta,
+              int m,double alpha,int Tm,int d)
+
+### Arguments
+
+|parameter|description|
+|-----|-----|
+|L|The object function, the dimension is same as *x*.|
+|x|The time series data, can be a vector or a *d*-row matrix. Suppose the first *m* data are observed with no change points.|
+|theta|Estimated parameter satisfying the sum of the first *m* object functions equal zero.|
+|m|The number of observed data.|
+|alpha|The significance level, taking value at 0.05 and 0.1.|
+|Tm|the ratio of the monitoring horizon to the size of the training sample, taking value at 1, 2, 10 and >100.|
+|d|The dimension of data, taking value at 1, 2 and 3.|
+
+### Value
+
+A numeric *k* representing the change point occurring at the time *m+k*.
+
+### Example
+
+```{r eval = FALSE}
+L<-function(x,mu){(x-mu)^2}
+x<-c(rnorm(200,0,1),rnorm(1800,2,1))
+m<-180
+theta<-mean(x[1:m])
+alpha<-0.05
+Tm<-10
+d<-1
+Rcpp::sourceCpp("src/CPD.Cpp.cpp")
+k<-SNSMS_Cpp(L,x,theta,m,alpha,Tm,d)
+plot(x,type="l")
+abline(v=m+k,col="red")
+```
+
+```{r eval = FALSE}
+library(MASS)
+L<-function(x,mu){(x-mu)^2}
+x<-cbind(t(mvrnorm(200,c(0,0),diag(c(1,1)))),t(mvrnorm(1800,c(1,2),diag(c(1,1)))))
+m<-180
+theta<-rowMeans(x[,1:m])
+alpha<-0.05
+Tm<-10
+d<-2
+SNSMS_Cpp(L,x,theta,m,alpha,Tm,d)
+```
+
+## Dataset db.c
+
+### Description
+
+A (2,4,3)-dimension array. It gives the decision boundary when the significance level alpha, the monitoring scheme Tm and the dimension of samples are given.
+
+### Usage
+
+data(db.c)
+
+### Format
+
+The 1-th dimension: the significance level *alpha*.
+
+The 2-th dimension: the monitoring scheme *Tm*.
+
+The 3-th dimension: the dimension *d* of samples.
+
+## References
+
+Yuan M, Lin Y. Model selection and estimation in regression with grouped variables[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2006, 68(1): 49-67.
+
+Chan N H, Ng W L, Yau C Y. A self-normalized approach to sequential change-point detection for time series[J]. Statistica Sinica, 2021, 31(1): 491-517.

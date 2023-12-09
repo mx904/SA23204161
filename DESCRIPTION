@@ -1,0 +1,34 @@
+Package: SA23204161
+Type: Package
+Title: R package for statistical computing of USTC
+Version: 1.0
+Date: 2023-11-27
+Author: Bosen Hu
+Maintainer: Bosen Hu <hubsmx@mail.ustc.edu.cn>
+Description: Provides functions for change-point detection (CPD) using both R and C++ languages. Implements the group non-negative garrotte algorithm using R. The package is designed for statistical computing at USTC.
+License: GPL (>= 2)
+Depends: R (>= 3.5.0)
+Imports: 
+  Rcpp,
+  RcppEigen,
+  utils,
+  stats,
+  pracma,
+  MASS
+LinkingTo: Rcpp,RcppEigen
+Encoding: UTF-8
+RoxyfenNote: 7.2.3
+RoxygenNote: 7.2.3
+Suggests: 
+  knitr,
+  rmarkdown,
+  DAAG,
+  boot,
+  bootstrap,
+  coda,
+  ggplot2,
+  microbenchmark,
+  stats4
+VignetteBuilder: knitr
+URL: http://github.com/mx904/SA23204161
+BugReports: http://github.com/mx904/SA23204161/issues

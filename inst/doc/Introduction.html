@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Bosen Hu" />
+
+<meta name="date" content="2023-12-10" />
+
+<title>Introduction for R package SA23204161</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction for R package SA23204161</h1>
+<h4 class="author">Bosen Hu</h4>
+<h4 class="date">2023-12-10</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#function-g.nn.garrotte" id="toc-function-g.nn.garrotte">Function G.nn.garrotte()</a>
+<ul>
+<li><a href="#description" id="toc-description">Description</a></li>
+<li><a href="#usage" id="toc-usage">Usage</a></li>
+<li><a href="#arguments" id="toc-arguments">Arguments</a></li>
+<li><a href="#value" id="toc-value">Value</a></li>
+<li><a href="#example" id="toc-example">Example</a></li>
+</ul></li>
+<li><a href="#function-snsms" id="toc-function-snsms">Function
+SNSMS()</a>
+<ul>
+<li><a href="#description-1" id="toc-description-1">Description</a></li>
+<li><a href="#usage-1" id="toc-usage-1">Usage</a></li>
+<li><a href="#arguments-1" id="toc-arguments-1">Arguments</a></li>
+<li><a href="#value-1" id="toc-value-1">Value</a></li>
+<li><a href="#example-1" id="toc-example-1">Example</a></li>
+</ul></li>
+<li><a href="#function-snsms_cpp" id="toc-function-snsms_cpp">Function
+SNSMS_Cpp()</a>
+<ul>
+<li><a href="#description-2" id="toc-description-2">Description</a></li>
+<li><a href="#usage-2" id="toc-usage-2">Usage</a></li>
+<li><a href="#arguments-2" id="toc-arguments-2">Arguments</a></li>
+<li><a href="#value-2" id="toc-value-2">Value</a></li>
+<li><a href="#example-2" id="toc-example-2">Example</a></li>
+</ul></li>
+<li><a href="#dataset-db.c" id="toc-dataset-db.c">Dataset db.c</a>
+<ul>
+<li><a href="#description-3" id="toc-description-3">Description</a></li>
+<li><a href="#usage-3" id="toc-usage-3">Usage</a></li>
+<li><a href="#format" id="toc-format">Format</a></li>
+</ul></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</div>
+
+<div id="function-g.nn.garrotte" class="section level2">
+<h2>Function G.nn.garrotte()</h2>
+<div id="description" class="section level3">
+<h3>Description</h3>
+<p>Solve the group linear regression using group non-negative garrotte
+method, given the linear regression data and the group information.</p>
+</div>
+<div id="usage" class="section level3">
+<h3>Usage</h3>
+<p>G.nn.garrotte(x, y, g.index, p,normalized = TRUE, gram = TRUE)</p>
+</div>
+<div id="arguments" class="section level3">
+<h3>Arguments</h3>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>x</td>
+<td>The design matrix, expressed as a matrix, has <em>n</em> rows and
+<em>m</em> columns.</td>
+</tr>
+<tr class="even">
+<td>y</td>
+<td>The response vector, expressed as a matrix, has <em>n</em> rows and
+<em>1</em> column.</td>
+</tr>
+<tr class="odd">
+<td>g.index</td>
+<td>The group information, expressed as a vector, has <em>m</em>
+dimensions, start from 1, the same group has the same elements.</td>
+</tr>
+<tr class="even">
+<td>p</td>
+<td>The group information, expressed as a vector, has
+<em>unique(g.index)</em> dimensions, the <em>i</em>-th element records
+the number of variables in the <em>i</em>-th group.</td>
+</tr>
+<tr class="odd">
+<td>normalized</td>
+<td>A logical variable, default is <em>TRUE</em>, scale every column of
+the design matrix.</td>
+</tr>
+<tr class="even">
+<td>gram</td>
+<td>A logical variable, default is <em>TRUE</em>, apply gram-Schmidt
+orthogonal normalization for column vectors of the same group.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value" class="section level3">
+<h3>Value</h3>
+<p>A list containing the origin data <em>x</em>, <em>y</em>,
+<em>g.index</em>, <em>p</em>, and the shrinking matrix <em>d</em>,
+estimated parameters <em>betas</em>, solution path <em>path</em>.</p>
+</div>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">mvrnorm</span>(<span class="dv">200</span>,<span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">8</span>),<span class="at">Sigma =</span> <span class="fu">diag</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">8</span>)))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>eps<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>beta<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">2</span>,.<span class="dv">3</span>,.<span class="dv">3</span>,.<span class="dv">5</span>,.<span class="dv">9</span>,.<span class="dv">4</span>,.<span class="dv">4</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>y<span class="ot">&lt;-</span>x<span class="sc">%*%</span>beta<span class="sc">+</span>eps</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>g.index<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">G.nn.garrotte</span>(x,y,g.index,p)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>fit</span></code></pre></div>
+</div>
+</div>
+<div id="function-snsms" class="section level2">
+<h2>Function SNSMS()</h2>
+<div id="description-1" class="section level3">
+<h3>Description</h3>
+<p>Calculate the change-point that may occur in the time series data
+using the self-normalized sequential change-point detection method,
+which avoids calculating the long-run covariance matrix.</p>
+</div>
+<div id="usage-1" class="section level3">
+<h3>Usage</h3>
+<p>SNSMS(L,x,theta,m,alpha,Tm,d)</p>
+</div>
+<div id="arguments-1" class="section level3">
+<h3>Arguments</h3>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L</td>
+<td>The object function, the dimension is same as <em>x</em>.</td>
+</tr>
+<tr class="even">
+<td>x</td>
+<td>The time series data, can be a vector or a <em>d</em>-row matrix.
+Suppose the first <em>m</em> data are observed with no change
+points.</td>
+</tr>
+<tr class="odd">
+<td>theta</td>
+<td>Estimated parameter satisfying the sum of the first <em>m</em>
+object functions equal zero.</td>
+</tr>
+<tr class="even">
+<td>m</td>
+<td>The number of observed data.</td>
+</tr>
+<tr class="odd">
+<td>alpha</td>
+<td>The significance level, taking value at 0.05 and 0.1.</td>
+</tr>
+<tr class="even">
+<td>Tm</td>
+<td>the ratio of the monitoring horizon to the size of the training
+sample, taking value at 1, 2, 10 and &gt;100.</td>
+</tr>
+<tr class="odd">
+<td>d</td>
+<td>The dimension of data, taking value at 1, 2 and 3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value-1" class="section level3">
+<h3>Value</h3>
+<p>A numeric <em>k</em> representing the change point occurring at the
+time <em>m+k</em>.</p>
+</div>
+<div id="example-1" class="section level3">
+<h3>Example</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="fu">rnorm</span>(<span class="dv">1800</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">180</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>theta<span class="ot">&lt;-</span><span class="fu">mean</span>(x[<span class="dv">1</span><span class="sc">:</span>m])</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>Tm<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="fu">SNSMS</span>(L,x,theta,m,alpha,Tm,d)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="fu">plot</span>(x,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>m<span class="sc">+</span>k,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">200</span>,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))),<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">1800</span>,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))))</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">180</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>theta<span class="ot">&lt;-</span><span class="fu">rowMeans</span>(x[,<span class="dv">1</span><span class="sc">:</span>m])</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>Tm<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="dv">2</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="fu">SNSMS</span>(L,x,theta,m,alpha,Tm,d)</span></code></pre></div>
+</div>
+</div>
+<div id="function-snsms_cpp" class="section level2">
+<h2>Function SNSMS_Cpp()</h2>
+<div id="description-2" class="section level3">
+<h3>Description</h3>
+<p>Calculate the change-point that may occur in the time series data
+using the self-normalized sequential change-point detection method, the
+Cpp version.</p>
+</div>
+<div id="usage-2" class="section level3">
+<h3>Usage</h3>
+<p>SNSMS_Cpp(Function L,NumericMatrix x,NumericVector theta, int
+m,double alpha,int Tm,int d)</p>
+</div>
+<div id="arguments-2" class="section level3">
+<h3>Arguments</h3>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L</td>
+<td>The object function, the dimension is same as <em>x</em>.</td>
+</tr>
+<tr class="even">
+<td>x</td>
+<td>The time series data, can be a vector or a <em>d</em>-row matrix.
+Suppose the first <em>m</em> data are observed with no change
+points.</td>
+</tr>
+<tr class="odd">
+<td>theta</td>
+<td>Estimated parameter satisfying the sum of the first <em>m</em>
+object functions equal zero.</td>
+</tr>
+<tr class="even">
+<td>m</td>
+<td>The number of observed data.</td>
+</tr>
+<tr class="odd">
+<td>alpha</td>
+<td>The significance level, taking value at 0.05 and 0.1.</td>
+</tr>
+<tr class="even">
+<td>Tm</td>
+<td>the ratio of the monitoring horizon to the size of the training
+sample, taking value at 1, 2, 10 and &gt;100.</td>
+</tr>
+<tr class="odd">
+<td>d</td>
+<td>The dimension of data, taking value at 1, 2 and 3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value-2" class="section level3">
+<h3>Value</h3>
+<p>A numeric <em>k</em> representing the change point occurring at the
+time <em>m+k</em>.</p>
+</div>
+<div id="example-2" class="section level3">
+<h3>Example</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="fu">rnorm</span>(<span class="dv">1800</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">180</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>theta<span class="ot">&lt;-</span><span class="fu">mean</span>(x[<span class="dv">1</span><span class="sc">:</span>m])</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>Tm<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">sourceCpp</span>(<span class="st">&quot;src/CPD.Cpp.cpp&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="fu">SNSMS_Cpp</span>(L,x,theta,m,alpha,Tm,d)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">plot</span>(x,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>m<span class="sc">+</span>k,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">200</span>,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))),<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">1800</span>,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">180</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>theta<span class="ot">&lt;-</span><span class="fu">rowMeans</span>(x[,<span class="dv">1</span><span class="sc">:</span>m])</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>Tm<span class="ot">&lt;-</span><span class="dv">10</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="dv">2</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">SNSMS_Cpp</span>(L,x,theta,m,alpha,Tm,d)</span></code></pre></div>
+</div>
+</div>
+<div id="dataset-db.c" class="section level2">
+<h2>Dataset db.c</h2>
+<div id="description-3" class="section level3">
+<h3>Description</h3>
+<p>A (2,4,3)-dimension array. It gives the decision boundary when the
+significance level alpha, the monitoring scheme Tm and the dimension of
+samples are given.</p>
+</div>
+<div id="usage-3" class="section level3">
+<h3>Usage</h3>
+<p>data(db.c)</p>
+</div>
+<div id="format" class="section level3">
+<h3>Format</h3>
+<p>The 1-th dimension: the significance level <em>alpha</em>.</p>
+<p>The 2-th dimension: the monitoring scheme <em>Tm</em>.</p>
+<p>The 3-th dimension: the dimension <em>d</em> of samples.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Yuan M, Lin Y. Model selection and estimation in regression with
+grouped variables[J]. Journal of the Royal Statistical Society Series B:
+Statistical Methodology, 2006, 68(1): 49-67.</p>
+<p>Chan N H, Ng W L, Yau C Y. A self-normalized approach to sequential
+change-point detection for time series[J]. Statistica Sinica, 2021,
+31(1): 491-517.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
