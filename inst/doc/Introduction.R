@@ -34,15 +34,14 @@
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  L<-function(x,mu){(x-mu)^2}
-#  x<-c(rnorm(200,0,1),rnorm(1800,2,1))
+#  x<-matrix(c(rnorm(200,0,0.1),rnorm(1800,2,0.1)),nrow = 1)
 #  m<-180
 #  theta<-mean(x[1:m])
 #  alpha<-0.05
 #  Tm<-10
 #  d<-1
-#  Rcpp::sourceCpp("src/CPD.Cpp.cpp")
 #  k<-SNSMS_Cpp(L,x,theta,m,alpha,Tm,d)
-#  plot(x,type="l")
+#  plot(x[1,],type="l")
 #  abline(v=m+k,col="red")
 
 ## ----eval = FALSE-------------------------------------------------------------

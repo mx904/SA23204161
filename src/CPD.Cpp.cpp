@@ -23,7 +23,7 @@ using namespace Rcpp;
 //'   Tm<-10
 //'   d<-1
 //'   k<-SNSMS_Cpp(L,x,theta,m,alpha,Tm,d)
-//'   plot(x,type="l")
+//'   plot(x[1,],type="l")
 //'   abline(v=m+k,col="red")
 //' }
 //' @examples

@@ -125,7 +125,7 @@ SNSMS_Cpp(Function L,NumericMatrix x,NumericVector theta,
 |parameter|description|
 |-----|-----|
 |L|The object function, the dimension is same as *x*.|
-|x|The time series data, can be a vector or a *d*-row matrix. Suppose the first *m* data are observed with no change points.|
+|x|The time series data, a *d*-row matrix. Suppose the first *m* data are observed with no change points.|
 |theta|Estimated parameter satisfying the sum of the first *m* object functions equal zero.|
 |m|The number of observed data.|
 |alpha|The significance level, taking value at 0.05 and 0.1.|
@@ -140,15 +140,14 @@ A numeric *k* representing the change point occurring at the time *m+k*.
 
 ```{r eval = FALSE}
 L<-function(x,mu){(x-mu)^2}
-x<-c(rnorm(200,0,1),rnorm(1800,2,1))
+x<-matrix(c(rnorm(200,0,0.1),rnorm(1800,2,0.1)),nrow = 1)
 m<-180
 theta<-mean(x[1:m])
 alpha<-0.05
 Tm<-10
 d<-1
-Rcpp::sourceCpp("src/CPD.Cpp.cpp")
 k<-SNSMS_Cpp(L,x,theta,m,alpha,Tm,d)
-plot(x,type="l")
+plot(x[1,],type="l")
 abline(v=m+k,col="red")
 ```
 

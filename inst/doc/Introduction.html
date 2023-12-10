@@ -581,9 +581,8 @@ m,double alpha,int Tm,int d)</p>
 </tr>
 <tr class="even">
 <td>x</td>
-<td>The time series data, can be a vector or a <em>d</em>-row matrix.
-Suppose the first <em>m</em> data are observed with no change
-points.</td>
+<td>The time series data, a <em>d</em>-row matrix. Suppose the first
+<em>m</em> data are observed with no change points.</td>
 </tr>
 <tr class="odd">
 <td>theta</td>
@@ -618,16 +617,15 @@ time <em>m+k</em>.</p>
 <div id="example-2" class="section level3">
 <h3>Example</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="fu">rnorm</span>(<span class="dv">1800</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">200</span>,<span class="dv">0</span>,<span class="fl">0.1</span>),<span class="fu">rnorm</span>(<span class="dv">1800</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)),<span class="at">nrow =</span> <span class="dv">1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">180</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>theta<span class="ot">&lt;-</span><span class="fu">mean</span>(x[<span class="dv">1</span><span class="sc">:</span>m])</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fl">0.05</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>Tm<span class="ot">&lt;-</span><span class="dv">10</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">sourceCpp</span>(<span class="st">&quot;src/CPD.Cpp.cpp&quot;</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="fu">SNSMS_Cpp</span>(L,x,theta,m,alpha,Tm,d)</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">plot</span>(x,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>m<span class="sc">+</span>k,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="fu">SNSMS_Cpp</span>(L,x,theta,m,alpha,Tm,d)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">plot</span>(x[<span class="dv">1</span>,],<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>m<span class="sc">+</span>k,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>L<span class="ot">&lt;-</span><span class="cf">function</span>(x,mu){(x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>}</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">200</span>,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))),<span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="dv">1800</span>,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)))))</span>

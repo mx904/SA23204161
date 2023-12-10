@@ -2771,9 +2771,9 @@ numerical, we can first use <em>sapply()</em> function and then use
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
 <span id="cb128-2"><a href="#cb128-2" tabindex="-1"></a>ts<span class="ot">&lt;-</span><span class="fu">microbenchmark</span>(<span class="at">joint.R=</span><span class="fu">joint.density.R</span>(),<span class="at">joint.cpp=</span><span class="fu">joint_density_cpp</span>())</span>
 <span id="cb128-3"><a href="#cb128-3" tabindex="-1"></a><span class="fu">summary</span>(ts)[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>##        expr       lq   median      uq
-## 1   joint.R 71.52840 73.26515 74.9884
-## 2 joint.cpp 23.72655 26.19085 28.5205</code></pre>
+<pre><code>##        expr       lq  median       uq
+## 1   joint.R 63.90165 65.3573 66.53115
+## 2 joint.cpp 21.47585 23.9086 24.97595</code></pre>
 <p>Rcpp function is below.</p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb130-1"><a href="#cb130-1" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
 <span id="cb130-2"><a href="#cb130-2" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
